@@ -1,0 +1,61 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          apache2-multi
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Start/stop apache2 web server
+### END INIT INFO
+
+command="$1"
+server="${2:-all}"
+
+case "$command" in 
+    start)
+	if [ "$server" = "all" ]
+	then
+	    for i in /usr/local/www/*/config/apache/httpd.conf
+	    do
+		echo starting $i
+		apache2ctl -f $i
+	    done
+	else 
+	    apache2ctl -f /usr/local/www/$server/config/apache/httpd.conf
+	fi
+	;;
+    stop)
+	if [ "$server" = "all" ]
+	then
+	    for i in /usr/local/www/*/config/apache/httpd.conf
+	    do
+		echo stopping $i
+		apache2ctl -f $i -k stop
+	    done
+	else 
+	    apache2ctl -f /usr/local/www/$server/config/apache/httpd.conf -k stop
+	fi
+	;;
+    restart)
+	if [ "$server" = "all" ]
+	then
+	    for i in /usr/local/www/*/config/apache/httpd.conf
+	    do
+		echo restarting $i
+		apache2ctl -f $i -k restart
+	    done
+	else 
+	    apache2ctl -f /usr/local/www/$server/config/apache/httpd.conf -k restart
+	fi
+	;;
+    list) 
+	for i in /usr/local/www/*/config/apache/httpd.conf
+	do
+	    echo $i
+	done
+	;;
+    *)
+	echo "Usage: $0 (start|stop|restart|list) [server|all]" >&2
+	exit 1;
+esac
+
