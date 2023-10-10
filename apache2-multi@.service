@@ -1,14 +1,14 @@
 [Unit]
-Description=The Apache HTTP Server (Instance %I)
+Description=The Apache HTTP Server (Instance %i)
 After=network.target nss-lookup.target network-online.target
-ConditionPathIsDirectory=/usr/local/www/%I/config/apache/
+ConditionPathIsDirectory=/usr/local/www/%i/config/apache/
 
 [Service]
 Type=forking
-EnvironmentFile=-/usr/local/www/%I/config/apache/env
-ExecStart=/usr/sbin/apachectl -f /usr/local/www/%I/config/apache/httpd.conf -k start
-ExecStop=/usr/sbin/apachectl -f /usr/local/www/%I/config/apache/httpd.conf -k stop
-ExecReload=/usr/sbin/apachectl -f /usr/local/www/%I/config/apache/httpd.conf -k graceful
+EnvironmentFile=-/usr/local/www/%i/config/apache/env
+ExecStart=/usr/sbin/apachectl -f /usr/local/www/%i/config/apache/httpd.conf -k start
+ExecStop=/usr/sbin/apachectl -f /usr/local/www/%i/config/apache/httpd.conf -k stop
+ExecReload=/usr/sbin/apachectl -f /usr/local/www/%i/config/apache/httpd.conf -k graceful
 PrivateTmp=false
 Restart=on-failure
 RestartSec=10
