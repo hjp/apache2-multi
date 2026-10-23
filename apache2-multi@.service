@@ -2,6 +2,7 @@
 Description=The Apache HTTP Server (Instance %i)
 After=network.target nss-lookup.target network-online.target
 ConditionPathIsDirectory=/usr/local/www/%i/config/apache/
+PartOf=apache2-multi.service
 
 [Service]
 Type=forking
